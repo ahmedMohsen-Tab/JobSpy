@@ -1,0 +1,21 @@
+{
+    "bot_token": "FakeToken",
+    "chat_id": "FakeID",
+    "groq_api_key": "gsk_FakeAPI",
+    "search_terms": [
+        "c++",
+        "Embedded Software Engineer"
+    ],
+    "locations": [
+        "Cairo, Egypt"
+    ],
+    "sites": [
+        "linkedin"
+    ],
+    "results_wanted": 25,
+    "hours_old": null,
+    "is_remote": false,
+    "match_title_only": false,
+    "exclude_terms": [],
+    "history_file": "notified_jobs.json"
+}
