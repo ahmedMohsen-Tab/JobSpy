@@ -2,12 +2,20 @@
     "bot_token": "8794115942:AAFbtG2cFtOxsYwYo1MfTDr9VZg0z8BkVeg",
     "chat_id": "629650774",
     "search_terms": [
-        "frontend", "backend", "fullstack", "react"
+        "c++",
+        "Embedded Software Engineer"
     ],
-    "results_wanted": 20,
-    "is_remote": false,
-    "history_file": "notified_jobs.json",
     "locations": [
-        "Cairo", "Egypt"
-    ]
+        "Cairo, Egypt"
+    ],
+    "sites": [
+        "linkedin",
+        "bayt"
+    ],
+    "results_wanted": 25,
+    "hours_old": null,
+    "is_remote": false,
+    "match_title_only": false,
+    "exclude_terms": [],
+    "history_file": "notified_jobs.json"
 }

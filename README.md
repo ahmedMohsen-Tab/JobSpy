@@ -1,15 +1,15 @@
 # JobSpy Telegram Bot
 
-This project scrapes LinkedIn jobs and sends new matches to a Telegram chat.
+This project scrapes jobs across multiple job boards (LinkedIn, Bayt, Indeed, Glassdoor) and sends accurate, deduplicated matches to a Telegram chat.
 
 ## Requirements
 
 - Docker
-- A valid Telegram bot token and chat ID in `JsonConfigurqation.json`
+- A valid Telegram bot token and chat ID in `JsonConfigurqation.json` or as environment variables.
 
 ## Configuration
 
-Set your Telegram credentials either in `JsonConfigurqation.json` or by exporting environment variables before running the container:
+Set your Telegram credentials and search preferences in `JsonConfigurqation.json` or by exporting environment variables before running:
 
 ```bash
 export BOT_TOKEN="YOUR_TELEGRAM_BOT_TOKEN"
@@ -23,19 +23,30 @@ Example `JsonConfigurqation.json`:
   "bot_token": "",
   "chat_id": "",
   "search_terms": [
-    "Embedded Software Engineer",
-    "c++"
+    "frontend", "backend", "fullstack", "react"
+  ],
+  "locations": [
+    "Cairo, Egypt"
+  ],
+  "sites": [
+    "linkedin", "bayt"
   ],
   "results_wanted": 20,
+  "hours_old": 48,
   "is_remote": false,
-  "history_file": "notified_jobs.json",
-  "locations": [
-    "Cairo"
-  ]
+  "match_title_only": true,
+  "exclude_terms": [
+    "senior", "lead", "principal", "manager", "director", "intern"
+  ],
+  "history_file": "notified_jobs.json"
 }
 ```
 
-The app will prefer the non-empty value from the JSON file; if it is blank, it falls back to the `BOT_TOKEN` and `CHAT_ID` environment variables.
+### Accuracy Settings
+- **`match_title_only`** (`true`/`false`): Filters out jobs where your search term is only mentioned in the description, keeping only relevant title matches.
+- **`exclude_terms`**: List of negative keywords. Any job title containing these words (e.g., senior, intern) is excluded.
+- **`hours_old`**: Only pulls listings posted within the last N hours (e.g., 24 or 48), avoiding old stale listings.
+- **`sites`**: List of job boards to scrape (`linkedin`, `bayt`, `indeed`, `glassdoor`). Combining boards increases coverage and mitigates LinkedIn rate-limiting.
 
 ## Build the Docker image
 
@@ -56,23 +67,6 @@ docker build -t jobspy-bot .
 ```
 
 This command will:
-
-- build the image if needed
-- create a local `notified_jobs.json` file if it does not exist
-- mount your local configuration file and history file into the container
-- persist `notified_jobs.json` on your host machine
-- run the script exactly as `python3 main.py`
-
-## Manual Docker run
-
-```bash
-docker run --rm \
-  -v "$(pwd)/JsonConfigurqation.json:/app/JsonConfigurqation.json:ro" \
-  -v "$(pwd)/notified_jobs.json:/app/notified_jobs.json" \
-  jobspy-bot
-```
-
-## Notes
-
-- The script is designed to run as a one-off job and can be scheduled with cron or a task scheduler.
-- LinkedIn may rate-limit requests with HTTP 429; this project includes retry/backoff logic to reduce failures.
+- Build the image if needed
+- Safely persist and preserve `notified_jobs.json` on your host machine
+- Run the scraper and send formatted HTML alerts to Telegram

@@ -13,8 +13,11 @@ case "${1:-run}" in
   run)
     docker build -t "$IMAGE_NAME" .
     docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
-    rm -rf "$(pwd)/notified_jobs.json"
-    touch "$(pwd)/notified_jobs.json"
+
+    # Preserve history across runs; create file only if it does not exist
+    if [ ! -f "$(pwd)/notified_jobs.json" ]; then
+      echo "[]" > "$(pwd)/notified_jobs.json"
+    fi
 
     docker run --rm \
       --name "$CONTAINER_NAME" \

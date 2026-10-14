@@ -1,0 +1,4 @@
+python-jobspy
+requests
+pandas
+beautifulsoup4
