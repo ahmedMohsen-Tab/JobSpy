@@ -1,0 +1,13 @@
+{
+    "bot_token": "8794115942:AAFbtG2cFtOxsYwYo1MfTDr9VZg0z8BkVeg",
+    "chat_id": "629650774",
+    "search_terms": [
+        "frontend", "backend", "fullstack", "react"
+    ],
+    "results_wanted": 20,
+    "is_remote": false,
+    "history_file": "notified_jobs.json",
+    "locations": [
+        "Cairo", "Egypt"
+    ]
+}
